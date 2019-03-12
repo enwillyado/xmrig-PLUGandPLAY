@@ -36,12 +36,20 @@ fi
 ##########################################
 # xmrig
 
-git clone https://github.com/xmrig/xmrig
+if [ ! -d xmrig ]
+then
+	git clone https://github.com/xmrig/xmrig
+else
+	git pull
+fi
 
 cp -R extra/xmrig/* xmrig
 
 cd xmrig
-mkdir build
+if [ ! -d build ]
+then
+	mkdir build
+fi
 cd build
 cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include/ -DWITH_HTTPD=OFF
 make
@@ -52,12 +60,20 @@ cd ../..
 ##########################################
 # xmrig-proxy
 
-git clone https://github.com/xmrig/xmrig-proxy
+if [ ! -d xmrig-proxy ]
+then
+	git clone https://github.com/xmrig/xmrig-proxy
+else
+	git pull
+fi
 
 cp -R extra/xmrig-proxy/* xmrig-proxy
 
 cd xmrig-proxy
-mkdir build
+if [ ! -d build ]
+then
+	mkdir build
+fi
 cd build
 cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include/ -DWITH_HTTPD=OFF
 make
