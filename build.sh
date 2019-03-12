@@ -30,7 +30,7 @@ cd ..
 ##########################################
 # xmrig
 
-çgit clone https://github.com/xmrig/xmrig
+git clone https://github.com/xmrig/xmrig
 
 cp -R extra/xmrig/* xmrig
 
@@ -68,24 +68,3 @@ md5sum xmrig.exe
 strip -s xmrig-proxy.exe
 md5sum xmrig-proxy.exe
 
-##########################################
-# Certs
-
-if [ ! -f key_free.pem ]
-then
-	openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365
-	openssl rsa -in key.pem -out key_free.pem
-fi
-
-##########################################
-# Execute 
-
-if [ -f xmrig-proxy.exe ]
-then
-	nohup ./xmrig-proxy.exe --tls-cert=cert.pem --tls-cert-key=key_free.pem --tls-bind 0.0.0.0:3333 -o pool.supportxmr.com:443 --tls -u 433hhduFBtwVXtQiTTTeqyZsB36XaBLJB6bcQfnqqMs5RJitdpi8xBN21hWiEfuPp2hytmf1cshgK5Grgo6QUvLZCP2QSMi &
-fi
-
-if [ -f xmrig.exe ]
-then
-	./xmrig.exe -o 0.0.0.0:3333 --tls
-fi
