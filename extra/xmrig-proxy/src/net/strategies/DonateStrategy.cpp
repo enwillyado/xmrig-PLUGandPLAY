@@ -64,7 +64,7 @@ xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener 
     m_client = new Client(-1, Platform::userAgent(), this);
 
 #   ifndef XMRIG_NO_TLS
-    m_client->setPool(Pool(DONATE_POOL_HOST, DONATE_POOL_NORMAL_PORT, DONATE_POOL_SSL_USER, Pool::kKeepAliveTimeout, false, true));
+    m_client->setPool(Pool(DONATE_POOL_HOST, DONATE_POOL_NORMAL_PORT, DONATE_POOL_SSL_USER, nullptr, Pool::kKeepAliveTimeout, false, true));
 #   else
     m_client->setPool(Pool(DONATE_POOL_HOST, DONATE_POOL_NORMAL_PORT, DONATE_POOL_SSL_USER));
 #   endif
