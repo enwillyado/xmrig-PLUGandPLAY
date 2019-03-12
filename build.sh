@@ -14,7 +14,7 @@ g++ --version
 ##########################################
 # dependences
 
-if [ ! -f libuv ]
+if [ ! -d libuv ]
 then
 	git clone https://github.com/libuv/libuv
 	cd libuv/
@@ -24,7 +24,7 @@ then
 	cd ..
 fi
 
-if [ ! -f openssl-OpenSSL_1_1_0c ]
+if [ ! -d openssl-OpenSSL_1_1_0c ]
 then
 	unzip -u extra/openssl-OpenSSL_1_1_0c.zip
 	cd openssl-OpenSSL_1_1_0c
