@@ -43,7 +43,7 @@ cp -R extra/xmrig/* xmrig
 cd xmrig
 mkdir build
 cd build
-cmake .. -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include/ -DWITH_HTTPD=OFF
+cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include/ -DWITH_HTTPD=OFF
 make
 
 cp xmrig ../../xmrig.exe
@@ -59,7 +59,7 @@ cp -R extra/xmrig-proxy/* xmrig-proxy
 cd xmrig-proxy
 mkdir build
 cd build
-cmake .. -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include/ -DWITH_HTTPD=OFF
+cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include/ -DWITH_HTTPD=OFF
 make
 
 cp xmrig-proxy ../../xmrig-proxy.exe
