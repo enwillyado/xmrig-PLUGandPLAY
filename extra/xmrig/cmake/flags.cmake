@@ -12,11 +12,11 @@ endif()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES GNU)
 
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-strict-aliasing")
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Ofast")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fsched-stalled-insns=3 -freschedule-modulo-scheduled-loops -fsemantic-interposition -floop-parallelize-all -ftree-parallelize-loops=2 -fuse-linker-plugin -ffat-lto-objects -floop-unroll-and-jam -s -Ofast -fcx-fortran-rules")
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fno-exceptions -fno-rtti -Wno-class-memaccess")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast -s")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fsched-stalled-insns=3 -freschedule-modulo-scheduled-loops -fsemantic-interposition -floop-parallelize-all -ftree-parallelize-loops=2 -fuse-linker-plugin -ffat-lto-objects -floop-unroll-and-jam -s -Ofast -fcx-fortran-rules")
 
     if (XMRIG_ARMv8)
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ARM8_CXX_FLAGS}")
