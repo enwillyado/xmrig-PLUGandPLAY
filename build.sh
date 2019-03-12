@@ -14,19 +14,25 @@ g++ --version
 ##########################################
 # dependences
 
-git clone https://github.com/libuv/libuv
-cd libuv/
-./autogen.sh
-./configure
-make -j12
-cd ..
+if [ ! -f libuv ]
+then
+	git clone https://github.com/libuv/libuv
+	cd libuv/
+	./autogen.sh
+	./configure
+	make -j12
+	cd ..
+fi
 
-unzip -u extra/openssl-OpenSSL_1_1_0c.zip
-cd openssl-OpenSSL_1_1_0c
-./config
-make
-cd ..
-
+if [ ! -f openssl-OpenSSL_1_1_0c ]
+then
+	unzip -u extra/openssl-OpenSSL_1_1_0c.zip
+	cd openssl-OpenSSL_1_1_0c
+	./config
+	make
+	cd ..
+fi
+	
 ##########################################
 # xmrig
 
