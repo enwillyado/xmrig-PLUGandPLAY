@@ -37,14 +37,12 @@ int _current_verboselevel;
 void match_features(const struct feature_map_t* matchtable, int count, uint32_t reg, struct cpu_id_t* data)
 {
 	int i;
-	for(i = 0; i < count; i++)
-		if(reg & (1u << matchtable[i].bit))
-		{
+	for (i = 0; i < count; i++)
+		if (reg & (1u << matchtable[i].bit))
 			data->flags[matchtable[i].feature] = 1;
-		}
 }
 
-static void default_warn(const char* msg)
+static void default_warn(const char *msg)
 {
 	fprintf(stderr, "%s", msg);
 }
@@ -58,10 +56,7 @@ void warnf(const char* format, ...)
 {
 	char buff[1024];
 	va_list va;
-	if(!_warn_fun)
-	{
-		return;
-	}
+	if (!_warn_fun) return;
 	va_start(va, format);
 	vsnprintf(buff, sizeof(buff), format, va);
 	va_end(va);
@@ -72,10 +67,7 @@ void debugf(int verboselevel, const char* format, ...)
 {
 	char buff[1024];
 	va_list va;
-	if(verboselevel > _current_verboselevel)
-	{
-		return;
-	}
+	if (verboselevel > _current_verboselevel) return;
 	va_start(va, format);
 	vsnprintf(buff, sizeof(buff), format, va);
 	va_end(va);
@@ -85,13 +77,12 @@ void debugf(int verboselevel, const char* format, ...)
 static int popcount64(uint64_t mask)
 {
 	int num_set_bits = 0;
-
-	while(mask)
-	{
+	
+	while (mask) {
 		mask &= mask - 1;
 		num_set_bits++;
 	}
-
+	
 	return num_set_bits;
 }
 
@@ -99,47 +90,17 @@ static int score(const struct match_entry_t* entry, const struct cpu_id_t* data,
                  int brand_code, uint64_t bits, int model_code)
 {
 	int res = 0;
-	if(entry->family	== data->family)
-	{
-		res += 2;
-	}
-	if(entry->model	== data->model)
-	{
-		res += 2;
-	}
-	if(entry->stepping	== data->stepping)
-	{
-		res += 2;
-	}
-	if(entry->ext_family	== data->ext_family)
-	{
-		res += 2;
-	}
-	if(entry->ext_model	== data->ext_model)
-	{
-		res += 2;
-	}
-	if(entry->ncores	== data->num_cores)
-	{
-		res += 2;
-	}
-	if(entry->l2cache	== data->l2_cache)
-	{
-		res += 1;
-	}
-	if(entry->l3cache	== data->l3_cache)
-	{
-		res += 1;
-	}
-	if(entry->brand_code   == brand_code)
-	{
-		res += 2;
-	}
-	if(entry->model_code   == model_code)
-	{
-		res += 2;
-	}
-
+	if (entry->family	== data->family    ) res += 2;
+	if (entry->model	== data->model     ) res += 2;
+	if (entry->stepping	== data->stepping  ) res += 2;
+	if (entry->ext_family	== data->ext_family) res += 2;
+	if (entry->ext_model	== data->ext_model ) res += 2;
+	if (entry->ncores	== data->num_cores ) res += 2;
+	if (entry->l2cache	== data->l2_cache  ) res += 1;
+	if (entry->l3cache	== data->l3_cache  ) res += 1;
+	if (entry->brand_code   == brand_code  ) res += 2;
+	if (entry->model_code   == model_code  ) res += 2;
+	
 	res += popcount64(entry->model_bits & bits) * 2;
 	return res;
 }
@@ -151,21 +112,15 @@ int match_cpu_codename(const struct match_entry_t* matchtable, int count,
 	int bestscore = -1;
 	int bestindex = 0;
 	int i, t;
-
-#if defined __GNUC__ & (defined _WIN64 | defined _WIN32)
-	debugf(3, "Matching cpu f:%d, m:%d, s:%d, xf:%d, xm:%d, ncore:%d, l2:%d, bcode:%d, bits:%I64d, code:%d\n",
-#else
+	
 	debugf(3, "Matching cpu f:%d, m:%d, s:%d, xf:%d, xm:%d, ncore:%d, l2:%d, bcode:%d, bits:%llu, code:%d\n",
-#endif
-	       data->family, data->model, data->stepping, data->ext_family,
-	       data->ext_model, data->num_cores, data->l2_cache, brand_code, (unsigned long long) bits, model_code);
-
-	for(i = 0; i < count; i++)
-	{
+		data->family, data->model, data->stepping, data->ext_family,
+		data->ext_model, data->num_cores, data->l2_cache, brand_code, (unsigned long long) bits, model_code);
+	
+	for (i = 0; i < count; i++) {
 		t = score(&matchtable[i], data, brand_code, bits, model_code);
 		debugf(3, "Entry %d, `%s', score %d\n", i, matchtable[i].name, t);
-		if(t > bestscore)
-		{
+		if (t > bestscore) {
 			debugf(2, "Entry `%s' selected - best score so far (%d)\n", matchtable[i].name, t);
 			bestscore = t;
 			bestindex = i;
@@ -181,23 +136,15 @@ void generic_get_cpu_list(const struct match_entry_t* matchtable, int count,
 	int i, j, n, good;
 	n = 0;
 	list->names = (char**) malloc(sizeof(char*) * count);
-	for(i = 0; i < count; i++)
-	{
-		if(strstr(matchtable[i].name, "Unknown"))
-		{
-			continue;
-		}
+	for (i = 0; i < count; i++) {
+		if (strstr(matchtable[i].name, "Unknown")) continue;
 		good = 1;
-		for(j = n - 1; j >= 0; j--)
-			if(!strcmp(list->names[j], matchtable[i].name))
-			{
+		for (j = n - 1; j >= 0; j--)
+			if (!strcmp(list->names[j], matchtable[i].name)) {
 				good = 0;
 				break;
 			}
-		if(!good)
-		{
-			continue;
-		}
+		if (!good) continue;
 #if defined(_MSC_VER)
 		list->names[n++] = _strdup(matchtable[i].name);
 #else
@@ -210,38 +157,16 @@ void generic_get_cpu_list(const struct match_entry_t* matchtable, int count,
 static int xmatch_entry(char c, const char* p)
 {
 	int i, j;
-	if(c == 0)
-	{
-		return -1;
-	}
-	if(c == p[0])
-	{
-		return 1;
-	}
-	if(p[0] == '.')
-	{
-		return 1;
-	}
-	if(p[0] == '#' && isdigit(c))
-	{
-		return 1;
-	}
-	if(p[0] == '[')
-	{
+	if (c == 0) return -1;
+	if (c == p[0]) return 1;
+	if (p[0] == '.') return 1;
+	if (p[0] == '#' && isdigit(c)) return 1;
+	if (p[0] == '[') {
 		j = 1;
-		while(p[j] && p[j] != ']')
-		{
-			j++;
-		}
-		if(!p[j])
-		{
-			return -1;
-		}
-		for(i = 1; i < j; i++)
-			if(p[i] == c)
-			{
-				return j + 1;
-			}
+		while (p[j] && p[j] != ']') j++;
+		if (!p[j]) return -1;
+		for (i = 1; i < j; i++)
+			if (p[i] == c) return j + 1;
 	}
 	return -1;
 }
@@ -251,21 +176,15 @@ int match_pattern(const char* s, const char* p)
 	int i, j, dj, k, n, m;
 	n = (int) strlen(s);
 	m = (int) strlen(p);
-	for(i = 0; i < n; i++)
-	{
-		if(xmatch_entry(s[i], p) != -1)
-		{
+	for (i = 0; i < n; i++) {
+		if (xmatch_entry(s[i], p) != -1) {
 			j = 0;
 			k = 0;
-			while(j < m && ((dj = xmatch_entry(s[i + k], p + j)) != -1))
-			{
+			while (j < m && ((dj = xmatch_entry(s[i + k], p + j)) != -1)) {
 				k++;
 				j += dj;
 			}
-			if(j == m)
-			{
-				return i + 1;
-			}
+			if (j == m) return i + 1;
 		}
 	}
 	return 0;
@@ -275,14 +194,9 @@ struct cpu_id_t* get_cached_cpuid(void)
 {
 	static int initialized = 0;
 	static struct cpu_id_t id;
-	if(initialized)
-	{
-		return &id;
-	}
-	if(cpu_identify(NULL, &id))
-	{
+	if (initialized) return &id;
+	if (cpu_identify(NULL, &id))
 		memset(&id, 0, sizeof(id));
-	}
 	initialized = 1;
 	return &id;
 }
@@ -295,17 +209,10 @@ int match_all(uint64_t bits, uint64_t mask)
 void debug_print_lbits(int debuglevel, uint64_t mask)
 {
 	int i, first = 0;
-	for(i = 0; i < 64; i++) if(mask & (((uint64_t) 1) << i))
-		{
-			if(first)
-			{
-				first = 0;
-			}
-			else
-			{
-				debugf(2, " + ");
-			}
-			debugf(2, "LBIT(%d)", i);
-		}
+	for (i = 0; i < 64; i++) if (mask & (((uint64_t) 1) << i)) {
+		if (first) first = 0;
+		else debugf(2, " + ");
+		debugf(2, "LBIT(%d)", i);
+	}
 	debugf(2, "\n");
 }

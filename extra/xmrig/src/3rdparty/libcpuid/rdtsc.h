@@ -26,7 +26,7 @@
 #ifndef __RDTSC_H__
 #define __RDTSC_H__
 
-void sys_precise_clock(uint64_t* result);
+void sys_precise_clock(uint64_t *result);
 int busy_loop_delay(int milliseconds);
 
 
