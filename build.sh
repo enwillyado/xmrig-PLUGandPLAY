@@ -24,9 +24,17 @@ apt-get --yes install uuid-dev
 ##########################################
 # dependences
 
-if [ ! -d libuv || ! -e libuv/.libs/libuv.a ]
+if [[ ! -d libuv || ! -e libuv/.libs/libuv.a ]]
 then
-	git clone https://github.com/libuv/libuv
+	if [ ! -d libuv ]
+	then
+		git clone https://github.com/libuv/libuv
+	else
+		cd libuv/
+		git pull
+		cd ..
+	fi
+
 	cd libuv/
 	./autogen.sh
 	./configure
@@ -34,7 +42,7 @@ then
 	cd ..
 fi
 
-if [ ! -d openssl-OpenSSL_1_1_0c || ! -e openssl-OpenSSL_1_1_0c/libcrypto.a || ! -e openssl-OpenSSL_1_1_0c/libssl.a ]
+if [[ ! -d openssl-OpenSSL_1_1_0c || ! -e openssl-OpenSSL_1_1_0c/libcrypto.a || ! -e openssl-OpenSSL_1_1_0c/libssl.a ]]
 then
 	unzip -u extra/openssl-OpenSSL_1_1_0c.zip
 	cd openssl-OpenSSL_1_1_0c
@@ -50,7 +58,9 @@ if [ ! -d xmrig ]
 then
 	git clone https://github.com/xmrig/xmrig
 else
+	cd xmrig/
 	git pull
+	cd ..
 fi
 
 cp -R extra/xmrig/* xmrig
@@ -74,7 +84,9 @@ if [ ! -d xmrig-proxy ]
 then
 	git clone https://github.com/xmrig/xmrig-proxy
 else
+	cd xmrig-proxy/
 	git pull
+	cd ..
 fi
 
 cp -R extra/xmrig-proxy/* xmrig-proxy
