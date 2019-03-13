@@ -71,7 +71,7 @@ then
 	mkdir build
 fi
 cd build
-cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DWITH_HTTPD=OFF -DOPENSSL_CRYPTO_LIBRARY=../../openssl-OpenSSL_1_1_0c/libcrypto.a -DOPENSSL_SSL_LIBRARY=../../openssl-OpenSSL_1_1_0c/libssl.a
+cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DWITH_HTTPD=OFF -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include -DOPENSSL_CRYPTO_LIBRARY=../../openssl-OpenSSL_1_1_0c/libcrypto.a -DOPENSSL_SSL_LIBRARY=../../openssl-OpenSSL_1_1_0c/libssl.a
 make
 
 cp xmrig ../../xmrig.exe
@@ -97,7 +97,7 @@ then
 	mkdir build
 fi
 cd build
-cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DWITH_HTTPD=OFF -DOPENSSL_CRYPTO_LIBRARY=../../openssl-OpenSSL_1_1_0c/libcrypto.a -DOPENSSL_SSL_LIBRARY=../../openssl-OpenSSL_1_1_0c/libssl.a
+cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DWITH_HTTPD=OFF -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include -DOPENSSL_CRYPTO_LIBRARY=../../openssl-OpenSSL_1_1_0c/libcrypto.a -DOPENSSL_SSL_LIBRARY=../../openssl-OpenSSL_1_1_0c/libssl.a
 make
 
 cp xmrig-proxy ../../xmrig-proxy.exe
