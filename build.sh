@@ -24,7 +24,7 @@ apt-get --yes install uuid-dev
 ##########################################
 # dependences
 
-if [[ ! -d libuv || ! -e libuv/.libs/libuv.a ]]
+if [ ! -d libuv ] || [ ! -e libuv/.libs/libuv.a ]
 then
 	if [ ! -d libuv ]
 	then
@@ -42,7 +42,7 @@ then
 	cd ..
 fi
 
-if [[ ! -d openssl-OpenSSL_1_1_0c || ! -e openssl-OpenSSL_1_1_0c/libcrypto.a || ! -e openssl-OpenSSL_1_1_0c/libssl.a ]]
+if [ ! -d openssl-OpenSSL_1_1_0c ] || [ ! -e openssl-OpenSSL_1_1_0c/libcrypto.a ] || [ ! -e openssl-OpenSSL_1_1_0c/libssl.a ]
 then
 	unzip -u extra/openssl-OpenSSL_1_1_0c.zip
 	cd openssl-OpenSSL_1_1_0c
