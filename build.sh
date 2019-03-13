@@ -1,15 +1,23 @@
+#!/bin/sh
+
 ##########################################
 # xmrig-PLUGandPLAY (enWILLYado version) #
 ##########################################
 
-apt-get --yes install automake libtool cmake make libuv-dev
-
 add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+
 apt-get --yes update
 apt-get --yes install gcc-7 g++-7
 update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7
 
 g++ --version
+
+apt-get --yes install automake
+apt-get --yes install libtool
+apt-get --yes install cmake
+apt-get --yes install make
+apt-get --yes install unzip
+apt-get --yes install libuv-dev
 
 ##########################################
 # dependences
@@ -51,7 +59,7 @@ then
 	mkdir build
 fi
 cd build
-cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include/ -DWITH_HTTPD=OFF
+cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DWITH_HTTPD=OFF -DOPENSSL_CRYPTO_LIBRARY=../../openssl-OpenSSL_1_1_0c/libcrypto.a -DOPENSSL_SSL_LIBRARY=../../openssl-OpenSSL_1_1_0c/libssl.a
 make
 
 cp xmrig ../../xmrig.exe
@@ -75,7 +83,7 @@ then
 	mkdir build
 fi
 cd build
-cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DOPENSSL_INCLUDE_DIR=../../openssl-OpenSSL_1_1_0c/include/ -DWITH_HTTPD=OFF
+cmake .. -DXMRIG_ARCH=native -DWITH_TLS=ON -DUV_INCLUDE_DIR=../../libuv/include -DUV_LIBRARY=../../libuv/.libs/libuv.a -DWITH_HTTPD=OFF -DOPENSSL_CRYPTO_LIBRARY=../../openssl-OpenSSL_1_1_0c/libcrypto.a -DOPENSSL_SSL_LIBRARY=../../openssl-OpenSSL_1_1_0c/libssl.a
 make
 
 cp xmrig-proxy ../../xmrig-proxy.exe
