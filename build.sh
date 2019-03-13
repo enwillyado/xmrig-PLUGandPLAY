@@ -17,12 +17,14 @@ apt-get --yes install libtool
 apt-get --yes install cmake
 apt-get --yes install make
 apt-get --yes install unzip
+
 apt-get --yes install libuv-dev
+apt-get --yes install uuid-dev
 
 ##########################################
 # dependences
 
-if [ ! -d libuv ]
+if [ ! -d libuv || ! -e libuv/.libs/libuv.a ]
 then
 	git clone https://github.com/libuv/libuv
 	cd libuv/
@@ -32,7 +34,7 @@ then
 	cd ..
 fi
 
-if [ ! -d openssl-OpenSSL_1_1_0c ]
+if [ ! -d openssl-OpenSSL_1_1_0c || ! -e openssl-OpenSSL_1_1_0c/libcrypto.a || ! -e openssl-OpenSSL_1_1_0c/libssl.a ]
 then
 	unzip -u extra/openssl-OpenSSL_1_1_0c.zip
 	cd openssl-OpenSSL_1_1_0c
