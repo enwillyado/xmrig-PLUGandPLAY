@@ -10,6 +10,7 @@ apt-get --yes update
 apt-get --yes install gcc-7 g++-7
 update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7
 
+gcc --version
 g++ --version
 
 apt-get --yes install automake
