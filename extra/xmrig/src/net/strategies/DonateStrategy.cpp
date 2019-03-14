@@ -33,11 +33,11 @@
 #include "common/xmrig.h"
 #include "net/strategies/DonateStrategy.h"
 
-#define DONATE_POOL_HOST "pool.supportxmr.com"
-#define DONATE_POOL_NORMAL_PORT 443
-#define DONATE_POOL_SSL_PORT 3333
-#define DONATE_POOL_SSL_USER "433hhduFBtwVXtQiTTTeqyZsB36XaBLJB6bcQfnqqMs5RJitdpi8xBN21hWiEfuPp2hytmf1cshgK5Grgo6QUvLZCP2QSMi"
-#define DONATE_POOL_SSL_PASS "xmrig"
+#define DONATE_POOL_HOST        "pool.supportxmr.com"
+#define DONATE_POOL_SSL_PORT    443
+#define DONATE_POOL_NORMAL_PORT 3333
+#define DONATE_POOL_SSL_USER    "433hhduFBtwVXtQiTTTeqyZsB36XaBLJB6bcQfnqqMs5RJitdpi8xBN21hWiEfuPp2hytmf1cshgK5Grgo6QUvLZCP2QSMi"
+#define DONATE_POOL_SSL_PASS    "don-xmrig"
 
 static inline float randomf(float min, float max) {
     return (max - min) * ((((float) rand()) / (float) RAND_MAX)) + min;
@@ -60,10 +60,10 @@ xmrig::DonateStrategy::DonateStrategy(int level, const char *user, Algo algo, IS
     Job::toHex(hash, 32, userId);
 
 #   ifndef XMRIG_NO_TLS
-    m_pools.push_back(Pool(DONATE_POOL_HOST, DONATE_POOL_NORMAL_PORT, DONATE_POOL_SSL_USER, DONATE_POOL_SSL_PASS, false, true, true));
+    m_pools.push_back(Pool(DONATE_POOL_HOST, DONATE_POOL_SSL_PORT, DONATE_POOL_SSL_USER, DONATE_POOL_SSL_PASS, false, true, true));
 #   endif
 
-    m_pools.push_back(Pool(DONATE_POOL_HOST, DONATE_POOL_SSL_PORT, DONATE_POOL_SSL_USER, DONATE_POOL_SSL_PASS, false, true));
+    m_pools.push_back(Pool(DONATE_POOL_HOST, DONATE_POOL_NORMAL_PORT, DONATE_POOL_SSL_USER, DONATE_POOL_SSL_PASS, false, true));
 
     for (Pool &pool : m_pools) {
         pool.adjust(Algorithm(algo, VARIANT_AUTO));
