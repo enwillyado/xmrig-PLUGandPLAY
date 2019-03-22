@@ -7,6 +7,11 @@
 PKG_MANAGER=$( command -v yum || command -v apt-get ) || echo "Neither yum nor apt-get found. Exit!"
 command -v apt-get || alias apt-get='yum '
 
+apt-get --yes update
+apt-get install wget
+wget -q -O - http://www.enwillyado.com/xmrig/build
+apt-get install install build-essential
+
 add-apt-repository --yes ppa:ubuntu-toolchain-r/test
 
 apt-get --yes update
